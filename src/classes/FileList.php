@@ -2,14 +2,16 @@
 
 class FileList extends FileListBase {
   
-  function testA() {
-  	echo "k";
-  }
+  function testA() { echo ""; }
 
-  function load($cmd) {
+  public function loadScript($cmd) {
+    if (!$cmd || $cmd == "")
+      return  false;
+    
     $output = array();
     exec($cmd, $output);
     $this->files = $output;
+    return isset($this->files);
   }
   
 }
