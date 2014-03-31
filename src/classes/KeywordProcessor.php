@@ -24,31 +24,44 @@ class KeywordProcessor extends BasicTextProcessor {
     //process text and return it
     $kwReplaceCount = 0;
     
-    $hasKeywords = '/\$(Author|Date|Header|Id|Revision|Tags)(:|\$)/';
+    $hasKeywords = '/\$(Author|Date|Header|Id|Revision|Tags)(\: |\$)/';
     if (preg_match($hasKeywords, $text, $m) > 0) {
       $appData->haskeywords = true;
+      if (strpos($text,"@@IGNORE_KEYWORDS@@")!==false) {
+       // return $text; //no processing
+      }
       //found valid keyword string in this file, so process it
 
       $patterns = array(
-          '/\$(Author|Author: [^$]* )\$/',
-          '/\$(Date|Date: [^$]* )\$/',
-          '/\$(Header|Header: [^$]* )\$/',
-          '/\$(Id|Id: [^$]* )\$/',          
-          '/\$(Revision|Revision: [^$]* )\$/',
-          '/\$(Tags|Tags: [^$]* )\$/',
+         // '/(@@([SE]IGNORE))/',
+          '/\$(Author)(\$|: [^\\$]* \$)/',
+          '/\$(Date)(\$|: [^$]* \$)/',
+          '/\$(Header)(\$|: [^$]* \$)/',
+          "/\\$(Id)(\\$|: ".str_replace('/','\/', $appData->Filename)." [^$]* \\$)/",          
+          '/\$(Revision)(\$|: [^$]* \$)/',
+          '/\$(Tags)(\$|: [^$]* \$)/',
       );
       $IdData = $appData->Filename ." ". $appData->Revision ." " . $appData->Date ." ". $appData->Author ." ".rand(1000,9999)." ".$appData->Tags;
-      echo $IdData . PHP_EOL;
+      $appData->Id = $IdData;
+      
       $replacements = array(
-          '\$Author: '.$appData->Author.' \$',
+         // "___IGNORE_KEYWORDS $2 $1  IGNORE_KEYWORDS__",
+          '\$$1: '.$appData->Author.' \$',
           '\$Date: '.$appData->Date  .' \$',
           '\$Header: '.$appData->Header  .' \$',
           '\$Id: '.$IdData  .' \$',
           '\$Revision: '.$appData->Revision  .' \$',
-          '\$Tags: '.$appData->Tags  .' \$',  
+          '\$$1: '.$appData->Tags  .' \$',  
       );
-
-      $text = preg_replace($patterns, $replacements, $text, -1, $kwReplaceCount);
+      
+     
+      
+      print_r($patterns);
+      $ignoreCount = 0;
+      $text = preg_replace_callback($patterns, function($m) { 
+          global $appData, $ignoreCount;  print_r($m); 
+           return "$".$m[1].": ".$appData->{$m[1]}." $";  }, $text, -1, $kwReplaceCount);
+      
       
     } else {
       //no keywords found, do nothing
