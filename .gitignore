@@ -1,0 +1,12 @@
+
+buuild/**
+vendor/**
+.settings/**
+.project
+.buildcath
+
+*.o
+php_errors.log
+test.php
+.buildpath
+*.tmp
