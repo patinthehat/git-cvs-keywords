@@ -31,7 +31,8 @@ class FileProcessor extends TextProcessorBase {
         echo "Writing ".$this->fileData.".tmp ...\n";
         file_put_contents($this->fileData . ".tmp", $this->data);
       }
-      $text = $this->data;
+      
+      //$text = $this->data;
       //$text = $this->data;
       //echo "\n--- " .$this->fileData . " ---\n";
       //echo "$text";

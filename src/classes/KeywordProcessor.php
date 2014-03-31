@@ -3,9 +3,11 @@
 require_once('src/classes/ApplicationData.php');
 $appData = ApplicationData::getInstance();
 
+
+
 class KeywordProcessor extends BasicTextProcessor {
 
-
+  //TODO change data storage - not happy with the way data is passed around
   static function checkKeywords($text) {
     global $appData;
     $hasKeywords = '/\$(Author|Date|Header|Id|Revision|Tags)(:|\$)/';
