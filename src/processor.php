@@ -1,6 +1,8 @@
 #!/usr/bin/php 
 <?php
 
+require_once('src/gck.utils.php');
+
 require_once('src/classes/ApplicationData.php');
 $appData = ApplicationData::getInstance();
 $appData->test1 = "test1";
@@ -12,8 +14,7 @@ require_once("src/classes/BasicTextProcessor.php");
 require_once("src/classes/KeywordProcessor.php");
 
 require_once("src/classes/TextProcessorBase.php");
-require_once("src/classes/FileProcessor.php");
-
+require_once('src/classes/FileProcessor.php');
 
 function __autoload($name) {
   if (file_exists("src/$name.php"))
@@ -23,13 +24,32 @@ function __autoload($name) {
 }
 
 
-$appData->gitdir = realpath( dirname ($argv[0]) ) . "/.git";
+$FROM_HOOK=getenv('FROM_HOOK');
+if ($FROM_HOOK=="") { $FROM_HOOK=false; } else { }
+
+if ($FROM_HOOK) 
+  echo "[debug] processor running, triggered from git hook $FROM_HOOK.\n";
+
+$appData->gitdir=realpath( dirname ($argv[0]) );
+while(1==1) {
+  if (is_dir($appData->gitdir."/.git")) {
+    $appData->gitdir=$appData->gitdir . "/.git";
+    break;
+  } else {
+    $appData->gitdir = realpath(dirname($appData->gitdir));
+  }
+  if ($appData->gitdir=="" || strlen($appData->gitdir)<2) break;
+}
+
+//$appData->gitdir = realpath( dirname ($argv[0]) ) . "/.git";
 
 $appData->Date = exec('git --git-dir='.$appData->gitdir.' log --format="%aD" -1 HEAD'); //date('Y-M-d H:i T'); //this should be 
 
 
 $fl = new FileList();
-$fl->load("src/git-show-modified-files.sh");
+$fl->loadScript("src/git-show-modified-files.sh");
+
+print_r($fl);
 
 $fp = new FileProcessor();
 
@@ -65,10 +85,11 @@ while($fl->count() > 0) {
   }
 //  echo $fn . PHP_EOL;
   if ($appData->haskeys) {
-    
-    
+        
   }
   
 }
 
+
+putenv('ROM_HOOK=');
 //print_r( ApplicationData::getInstance() );
