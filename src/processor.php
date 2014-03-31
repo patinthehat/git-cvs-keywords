@@ -56,6 +56,7 @@ $fp = new FileProcessor();
 while($fl->count() > 0) {
   $appData->save = 0;
   $fn = $fl->popFile();
+  echo "fn = $fn \n";
   $fp->reset();
   $fp->loadText( $fn );
   
@@ -91,5 +92,5 @@ while($fl->count() > 0) {
 }
 
 
-putenv('ROM_HOOK=');
+putenv('FROM_HOOK=');
 //print_r( ApplicationData::getInstance() );
