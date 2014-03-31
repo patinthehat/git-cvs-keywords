@@ -1,4 +1,10 @@
 <?php
+/**
+ * $Author$
+ *  
+ * $Id$
+ *
+ */ 
 
 require_once('src/classes/ApplicationData.php');
 $appData = ApplicationData::getInstance();
@@ -27,23 +33,23 @@ class KeywordProcessor extends BasicTextProcessor {
     $hasKeywords = '/\$(Author|Date|Header|Id|Revision|Tags)(\: |\$)/';
     if (preg_match($hasKeywords, $text, $m) > 0) {
       $appData->haskeywords = true;
-      if (strpos($text,"@@IGNORE_KEYWORDS@@")!==false) {
-       // return $text; //no processing
+      if (strpos($text,"@@IGNORE"."KEYWORDS")!==false) {
+        return $text; //no processing
       }
       //found valid keyword string in this file, so process it
 
       $patterns = array(
          // '/(@@([SE]IGNORE))/',
-          '/\$(Author)(\$|: [^\\$]* \$)/',
-          '/\$(Date)(\$|: [^$]* \$)/',
-          '/\$(Header)(\$|: [^$]* \$)/',
+          '/\$(Author|Date|Header|Tags|Revision)(\$|: [^\\$]* \$)/',
+          //'/\$(Date)(\$|: [^$]* \$)/',
+         // '/\$(Header)(\$|: [^$]* \$)/',
           "/\\$(Id)(\\$|: ".str_replace('/','\/', $appData->Filename)." [^$]* \\$)/",          
-          '/\$(Revision)(\$|: [^$]* \$)/',
-          '/\$(Tags)(\$|: [^$]* \$)/',
+         // '/\$(Revision)(\$|: [^$]* \$)/',
+         // '/\$(Tags)(\$|: [^$]* \$)/',
       );
       $IdData = $appData->Filename ." ". $appData->Revision ." " . $appData->Date ." ". $appData->Author ." ".rand(1000,9999)." ".$appData->Tags;
       $appData->Id = $IdData;
-      
+      /*
       $replacements = array(
          // "___IGNORE_KEYWORDS $2 $1  IGNORE_KEYWORDS__",
           '\$$1: '.$appData->Author.' \$',
@@ -52,17 +58,19 @@ class KeywordProcessor extends BasicTextProcessor {
           '\$Id: '.$IdData  .' \$',
           '\$Revision: '.$appData->Revision  .' \$',
           '\$$1: '.$appData->Tags  .' \$',  
-      );
+      );*/
       
      
       
-      print_r($patterns);
-      $ignoreCount = 0;
+      //print_r($patterns);
+      
+      $start = microtime();
       $text = preg_replace_callback($patterns, function($m) { 
-          global $appData, $ignoreCount;  print_r($m); 
+          global $appData;  //print_r($m); 
            return "$".$m[1].": ".$appData->{$m[1]}." $";  }, $text, -1, $kwReplaceCount);
       
-      
+        $end = microtime();
+        printf("$kwReplaceCount %.4f\n", $end*1000 - $start*1000);
     } else {
       //no keywords found, do nothing
       $appData->haskeywords = false;

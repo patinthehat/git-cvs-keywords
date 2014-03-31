@@ -2,8 +2,8 @@
 /**
  * $Author$
  * 
- * 
-$@@SIGNORE  
+ *  $Id$
+$ @@IGNOREKE YWORDS. disables matching
  * $Id$
  * @@EIGNORE  
  *
@@ -33,7 +33,7 @@ class FileProcessor extends TextProcessorBase {
     }
   
     public function processText() {
-      $this->data = str_replace('###REPLACEME###', '--REPLACED--', $this->data);
+      $this->data = str_replace('###REP"."LACEME###', '--REPLACED--', $this->data);
     }
   
     public function saveText($data) {
