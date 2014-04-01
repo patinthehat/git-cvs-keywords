@@ -1,10 +1,7 @@
 <?php
 
-abstract class Processor {
-//  abstract public function process();
-}
 
-abstract class TextProcessorBase extends Processor  {
+abstract class TextProcessorBase   {
   protected $data;
   protected $textData;
   

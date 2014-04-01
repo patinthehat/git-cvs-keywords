@@ -13,5 +13,11 @@ class FileList extends FileListBase {
     $this->files = $output;
     return isset($this->files);
   }
-  
+
+
+  function loadArray(array $a) {
+    $ret =  array_merge($this->files, $a);
+    return $ret;  
+  }
+
 }

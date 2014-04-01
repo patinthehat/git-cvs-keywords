@@ -1,28 +1,30 @@
 #!/usr/bin/php 
 <?php
 
+  require_once('/home/trick/Development/github/git-cvs-keywords/autoload.php');
+
+/*
 require_once('src/gck.utils.php');
 
 require_once('src/classes/ApplicationData.php');
-$appData = ApplicationData::getInstance();
-$appData->test1 = "test1";
 
 require_once("src/classes/FileListBase.php");
 require_once("src/classes/FileList.php");
 
-require_once("src/classes/BasicTextProcessor.php");
+//require_once("src/classes/BasicTextProcessor.php");
 require_once("src/classes/KeywordProcessor.php");
 
 require_once("src/classes/TextProcessorBase.php");
 require_once('src/classes/FileProcessor.php');
-
+*/
+/*
 function __autoload($name) {
   if (file_exists("src/$name.php"))
     include_once("src/$name.php");
   if (file_exists("src/classes/$name.php"))
     include_once("src/classes/$name.php");  
 }
-
+*/
 
 $FROM_HOOK=getenv('FROM_HOOK');
 if ($FROM_HOOK=="") { $FROM_HOOK=false; } else { }
@@ -49,9 +51,14 @@ $appData->Date = exec('git --git-dir='.$appData->gitdir.' log --format="%aD" -1 
 $fl = new FileList();
 $fl->loadScript("src/git-show-modified-files.sh");
 
-print_r($fl);
+
+foreach($argv as $argf) {
+  $fl->pushFile($argf);
+}
 
 $fp = new FileProcessor();
+
+print_r($fl);
 
 while($fl->count() > 0) {
   $appData->save = 0;
@@ -60,7 +67,8 @@ while($fl->count() > 0) {
   $fp->reset();
   $fp->loadText( $fn );
   
-  if (KeywordProcessor::checkKeywords( $fp->getData() )) {
+  $inst = KeywordProcessor::getInstance();
+  if ($inst::checkKeywords( $fp->getData() )) { } ;
     $appData->Id = "";
     $appData->Filename = $fn;
     $appData->Author = exec('git --git-dir='.$appData->gitdir.'  log -n 1 --format="%aN <%ae>" HEAD');
@@ -89,7 +97,7 @@ while($fl->count() > 0) {
         
   }
   
-}
+//}
 
 
 putenv('FROM_HOOK=');

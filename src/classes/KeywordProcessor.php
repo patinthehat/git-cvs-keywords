@@ -7,14 +7,13 @@
  */ 
 
 require_once('src/classes/ApplicationData.php');
-$appData = ApplicationData::getInstance();
+require_once('src/classes/BasicTextProcessor.php');
 
 
-
-class KeywordProcessor extends BasicTextProcessor {
+class KeywordProcessor extends \BasicTextProcessor {
 
   //TODO change data storage - not happy with the way data is passed around
-  static function checkKeywords($text) {
+  public static function checkKeywords($text) {
     global $appData;
     $hasKeywords = '/\$(Author|Date|Header|Id|Revision|Tags)(:|\$)/';
     if (preg_match($hasKeywords, $text, $m) > 0) {
@@ -25,7 +24,7 @@ class KeywordProcessor extends BasicTextProcessor {
     return $appData->haskeywords;
   }
   
-  static function processText($text) {
+  public static function processText($text) {
     global $appData;
     //process text and return it
     $kwReplaceCount = 0;

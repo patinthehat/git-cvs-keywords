@@ -1,7 +1,8 @@
 <?php
 
-require_once('src/classes/ApplicationData.php');
-$appData = ApplicationData::getInstance();
+//require_once('src/classes/ApplicationData.php');
+//require_once("src/classes/TextProcessorBase.php");
+//require_once('src/classes/FileProcessor.php');
 
 class TextProcessor extends TextProcessorBase  {
 

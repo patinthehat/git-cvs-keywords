@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit 
+    bootstrap="autoload.php"
+
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    stopOnFailure="True"
+    syntaxCheck="true"
+>
+
+    <testsuites>
+        <testsuite name="basic">
+            <directory>test</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+           <directory suffix=".php">test/</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-html"
+            target="coverage"
+            charset="UTF-8"
+            yui="true"
+            highlight="true"
+            lowUpperBound="40"
+            highLowerBound="70"
+        />
+    </logging>
+
+</phpunit>

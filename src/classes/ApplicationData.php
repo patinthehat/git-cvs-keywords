@@ -30,4 +30,5 @@ class ApplicationData {
   
 }
 
+$appData = ApplicationData::getInstance();
 // $appData = ApplicationData::getInstance();

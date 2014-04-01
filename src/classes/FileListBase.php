@@ -7,24 +7,24 @@ abstract class FileListBase implements Countable {
     $this->files[] = $filename;
   }
   
-  function popFile() {
+  public function popFile() {
      //$ret = $this->files[0];
      $ret = array_shift($this->files);
      return $ret;
   }
   
-  function getCount() {
+  public function getCount() {
     return count($this->files);
   }
     
-  function getFiles() { 
+  public function getFiles() { 
     return $this->files;
   }
   
-  abstract function testA();
+  public abstract function testA();
   
   
-  function count() {
+  public function count() {
     return $this->getCount();
   }
 }
