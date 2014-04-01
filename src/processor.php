@@ -47,6 +47,8 @@ $fp = new FileProcessor();
 while($fl->count() > 0) {
   $appData->save = 0;
   $fn = $fl->popFile();
+  $appData->Filename = $fn;
+  
   $fp->reset();
   $fp->loadText( $fn );
   

@@ -1,6 +1,8 @@
 <?php
 /**
- * $Author$
+ * $Filename$! --
+ * 
+ * $Revision$
  *  
  * $Id$
  *
@@ -10,7 +12,7 @@ require_once('src/classes/ApplicationData.php');
 require_once('src/classes/BasicTextProcessor.php');
 
 if (!defined('PROCESSOR_CHECK_FOR_KEYWORDS_RE')) {
-  $ValidKeywords = array('Author', 'Date', 'Header', 'Id', 'Revision', 'Tags');
+  $ValidKeywords = array('Author', 'Date', 'Filename', 'Header', 'Id', 'Revision', 'Tags');
   $CheckForValidKeywordsRegEx = KeywordProcessor::GenerateRegExKeywordMatching($ValidKeywords);
   define('PROCESSOR_CHECK_FOR_KEYWORDS_RE', $CheckForValidKeywordsRegEx);
 }
@@ -57,7 +59,7 @@ class KeywordProcessor extends BasicTextProcessor {
       //found valid keyword string in this file, so process it
 
       $patterns = array(
-          '/\$(Author|Date|Header|Tags|Revision)(\$|: [^\\$]* \$)/',  //match most keywords 
+          '/\$(Author|Date|Filename|Header|Tags|Revision)(\$|: [^\\$]* \$)([!]?)/',  //match most keywords 
           "/\\$(Id)(\\$|: ".str_replace('/','\/', $appData->Filename)." [^$]* \\$)/",   /// match (Id filename  ... ) keyword seperately
       );
       //generate Id data
@@ -65,15 +67,21 @@ class KeywordProcessor extends BasicTextProcessor {
       $appData->Id = $IdData;
       
       
-      $start = microtime();
+      //$start = microtime();
       $text = preg_replace_callback($patterns, 
-        function($m) { 
+        function($m) {
+          if (!isset($m[3]))
+            $m[3] = "";
+           
             global $appData; 
+            if ($m[3] == '!') 
+              return $appData->{$m[1]};
              return "$".$m[1].": ".$appData->{$m[1]}." $";  
         }, $text, -1, $kwReplaceCount);
 
-      $end = microtime();
+      //$end = microtime();
       //printf("$kwReplaceCount %.4f\n", $end*1000 - $start*1000);
+      //echo "* $kwReplaceCount keyword strings updated\n";
     } else {
       //no keywords found, do nothing
       $appData->haskeywords = false;

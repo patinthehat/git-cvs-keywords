@@ -2,6 +2,8 @@
 buuild/**
 vendor/**
 .settings/**
+coverage/**
+
 .project
 .buildcath
 
@@ -11,3 +13,5 @@ test.php
 .buildpath
 *.tmp
 .project
+
+
