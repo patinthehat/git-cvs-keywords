@@ -15,23 +15,35 @@
 
 <br/>
 
-
 ---
 
----
-### Documentation
+### **Documentation**
 
 
   + Scripts 
-    - TODO
+    + `git-process-keywords` - process a single file and update its Keywords. - _unimplemented_
+
 ----
 
   + Classes 
-    - TODO
+      + TODO AAA
 ----
 
-
   + Functions
-    - TODO
+      + TODO AAA
 -----
+
+
+### Supported Keywords
+
+  + All Ketwords are in the format `$Keyword$` or `$Keyword: data $` and will be updated with these two formats in mind.
+
+  <ul>
+   <li> _`Authoor`_ - auhtor of changes </li>
+   <li>_ `Date`_ - daate sa reported by git </li>
+   <li> _`Header`_ - file header </li>
+   <li> _`Tags`_ - somma-seperated list of git tags </li>
+   <li> _`Revision` _- revision hash of current repository.</li>
+  </ul>
+
 
