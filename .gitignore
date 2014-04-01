@@ -10,3 +10,4 @@ php_errors.log
 test.php
 .buildpath
 *.tmp
+.project
