@@ -2,7 +2,7 @@
 ---
 
   - utility and git hooks for processing text files with cvs-style keywords (`$Id$`, etc.)
-
+ 
 
 <br/>
 <br/>
@@ -19,9 +19,15 @@
 
 ### **Documentation**
 
+---
+
+Start here to read all of the documentation, or jump to [Supported Keywords](#supported-keywords).
+
+---
+
 
   + Scripts 
-    + `git-process-keywords` - process a single file and update its Keywords. - _unimplemented_
+    + `git-process-keywords` - process a single file and update its Keywords.  _unimplemented_
 
 ----
 
@@ -37,6 +43,7 @@
 ### Supported Keywords
 
   + All Ketwords are in the format `$Keyword$` or `$Keyword: data $` and will be updated with these two formats in mind.
+  + Note the *space* between `data` and the ending `$`.
 
   <ul>
    <li> _`Authoor`_ - auhtor of changes </li>
