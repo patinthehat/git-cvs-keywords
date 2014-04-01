@@ -1,3 +1,4 @@
+<!-- @@IGNOREKEYWORDS -->
 ## git-cvs-keywords 
 ---
 
@@ -9,8 +10,8 @@
 
 ### Objective
 ---
-  + to provide automated _and_ manual tools for updating CVS-style `$Keywords$` in text files.
-  + autonation provided via git hooks.
+  + provide an automated and manual tools for updating CVS-style `$Keywords$` in text files.
+  + autonatin provided via git hooks.
 
 
 <br/>
@@ -27,30 +28,34 @@ Start here to read all of the documentation, or jump to [Supported Keywords](#su
 
 
   + Scripts 
-    + `git-process-keywords` - process a single file and update its Keywords.  _unimplemented_
+    + `git-process-keywords` - process a single file and update its Keywords.  unimplemented
 
 ----
 
   + Classes 
       + TODO AAA
+
+
 ----
 
   + Functions
       + TODO AAA
+
+
 -----
 
 
 ### Supported Keywords
 
   + All Ketwords are in the format `$Keyword$` or `$Keyword: data $` and will be updated with these two formats in mind.
-  + Note the *space* between `data` and the ending `$`.
+  + Note the *space* between `data` and the ending `$`. This is CVS forkat and is required for correct [arsong.
 
   <ul>
-   <li> _`Authoor`_ - auhtor of changes </li>
-   <li>_ `Date`_ - daate sa reported by git </li>
-   <li> _`Header`_ - file header </li>
-   <li> _`Tags`_ - somma-seperated list of git tags </li>
-   <li> _`Revision` _- revision hash of current repository.</li>
+     <li> `_Authoor_` - auhtor of changes </li>
+     <li> `_Date_` - daate sa reported by git </li>
+     <li> `_Header_` - file header </li>
+     <li> `_Tags_` - somma-seperated list of git tags </li>
+     <li> `_Revision_` - revision hash of current repository.</li>
   </ul>
 
 

@@ -1,22 +1,8 @@
 #!/usr/bin/php 
 <?php
 
-  require_once('/home/trick/Development/github/git-cvs-keywords/autoload.php');
+  require_once(getenv('HOME').'/Development/github/git-cvs-keywords/autoload.php');
 
-/*
-require_once('src/gck.utils.php');
-
-require_once('src/classes/ApplicationData.php');
-
-require_once("src/classes/FileListBase.php");
-require_once("src/classes/FileList.php");
-
-//require_once("src/classes/BasicTextProcessor.php");
-require_once("src/classes/KeywordProcessor.php");
-
-require_once("src/classes/TextProcessorBase.php");
-require_once('src/classes/FileProcessor.php');
-*/
 /*
 function __autoload($name) {
   if (file_exists("src/$name.php"))
@@ -52,23 +38,23 @@ $fl = new FileList();
 $fl->loadScript("src/git-show-modified-files.sh");
 
 
-foreach($argv as $argf) {
+foreach($argv as $argf)
   $fl->pushFile($argf);
-}
 
 $fp = new FileProcessor();
 
-print_r($fl);
 
 while($fl->count() > 0) {
   $appData->save = 0;
   $fn = $fl->popFile();
-  echo "fn = $fn \n";
   $fp->reset();
   $fp->loadText( $fn );
   
-  $inst = KeywordProcessor::getInstance();
-  if ($inst::checkKeywords( $fp->getData() )) { } ;
+  //only set data if the file contains valid Keywords
+  if (KeywordProcessor::checkKeywords( $fp->getData() )) { 
+    //Set $appDtaa->Keyword to pass keyword data to the regex replacer
+    //TODO executing git is not idea which is why it's only done if there are keywords, but there must
+    //be a better way.
     $appData->Id = "";
     $appData->Filename = $fn;
     $appData->Author = exec('git --git-dir='.$appData->gitdir.'  log -n 1 --format="%aN <%ae>" HEAD');
@@ -81,24 +67,18 @@ while($fl->count() > 0) {
     $appData->save = 1;
   }
   
-  
 
   $fp->processText();
   $data = KeywordProcessor::processText($fp->getData());
   $fp->setData($data);
   if ($appData->save == 1) {
-    
     //write processed text back to file / temp/test file
     $fp->saveText( $fn . ".tmp" );
     $appData->save = 0;
   }
-//  echo $fn . PHP_EOL;
-  if ($appData->haskeys) {
-        
-  }
   
-//}
+} // -- end fl.count loop --
 
 
-putenv('FROM_HOOK=');
+//putenv('FROM_HOOK=');
 //print_r( ApplicationData::getInstance() );
