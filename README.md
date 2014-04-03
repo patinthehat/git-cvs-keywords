@@ -58,4 +58,9 @@ Start here to read all of the documentation, or jump to [Supported Keywords](#su
      <li> `_Revision_` - revision hash of current repository.</li>
   </ul>
 
+---
+
+
+<br/>
+<center> [![Open Software Initiative](http://opensource.org/files/osi_logo_100X133_90ppi.png)] </center>
 
